@@ -1,4 +1,4 @@
-package com.example.monolith_financial_system;
+package com.example.monolithfinancialsystem;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

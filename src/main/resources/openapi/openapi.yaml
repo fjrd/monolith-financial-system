@@ -1,0 +1,249 @@
+openapi: 3.0.0
+info:
+  title: Financial System API
+  version: 1.0.0
+  description: API for managing users and their accounts
+tags:
+  - name: Auth api
+  - name: User api
+  - name: Account api
+paths:
+  /auth/login:
+    post:
+      summary: Authenticate and get JWT token
+      operationId: login
+      tags:
+        - Auth api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        200:
+          description: JWT token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+  /users:
+    get:
+      summary: Search users
+      operationId: getUsers
+      tags:
+        - User api
+      parameters:
+        - name: dateOfBirth
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: phone
+          in: query
+          schema:
+            type: string
+        - name: name
+          in: query
+          schema:
+            type: string
+        - name: email
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 1
+        - name: size
+          in: query
+          schema:
+            type: integer
+            format: int64
+            default: 10
+      responses:
+        200:
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+
+  /users/{id}:
+    get:
+      summary: Get user profile by id
+      operationId: getUserById
+      tags:
+        - User api
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+  
+  /users/{id}/emails:
+    put:
+      summary: Create or update user emails
+      operationId: createOrUpdateUserEmails
+      tags:
+        - User api
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserEmailsDto'
+      responses: 
+        200:
+          description: User emails
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEmailsDto'
+
+  /users/{id}/phones:
+    put:
+      summary: Create or update user phones
+      operationId: createOrUpdateUserPhones
+      tags:
+        - User api
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPhonesDto'
+      responses:
+        200:
+          description: User phones
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/UserPhonesDto'
+
+  /account/transfer:
+    post:
+      summary: Transfer money
+      operationId: transfer
+      tags:
+        - Account api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferRequest'
+      responses:
+        200:
+          description: Transfer completed
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - password
+      properties:
+        phone:
+          type: string
+          description: Phone number
+        email:
+          type: string
+          description: Email
+        password:
+          type: string
+          format: password
+      oneOf:
+        - required:
+            - phone
+        - required:
+            - email
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        emails:
+          type: array
+          items:
+            type: string
+        phones:
+          type: array
+          items:
+            type: string
+        account:
+          $ref: '#/components/schemas/AccountDTO'
+
+    UserEmailsDto:
+      type: object
+      properties:
+        emails:
+          type: array
+          items:
+            type: string
+
+    UserPhonesDto:
+      type: object
+      properties:
+        phones:
+          type: array
+          items:
+            type: string
+
+    TransferRequest:
+      type: object
+      properties:
+        toUserId:
+          type: integer
+          format: int64
+        value:
+          type: number
+          format: number
+
+    AccountDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        balance:
+          type: number
+          format: number

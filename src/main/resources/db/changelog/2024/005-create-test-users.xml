@@ -1,0 +1,149 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="005-create-test-users.xml" author="areztsov">
+
+        <!-- Insert Users -->
+        <insert tableName="user">
+            <column name="ID" valueNumeric="1"/>
+            <column name="NAME" value="John Doe"/>
+            <column name="DATE_OF_BIRTH" value="1985-05-15"/>
+            <column name="PASSWORD" value="password123"/>
+        </insert>
+        <insert tableName="user">
+            <column name="ID" valueNumeric="2"/>
+            <column name="NAME" value="Jane Smith"/>
+            <column name="DATE_OF_BIRTH" value="1990-06-20"/>
+            <column name="PASSWORD" value="password456"/>
+        </insert>
+        <insert tableName="user">
+            <column name="ID" valueNumeric="3"/>
+            <column name="NAME" value="Alice Johnson"/>
+            <column name="DATE_OF_BIRTH" value="1975-07-25"/>
+            <column name="PASSWORD" value="password789"/>
+        </insert>
+
+        <!-- Insert Accounts -->
+        <insert tableName="ACCOUNT">
+            <column name="ID" valueNumeric="1"/>
+            <column name="USER_ID" valueNumeric="1"/>
+            <column name="BALANCE" valueNumeric="100.00"/>
+        </insert>
+        <insert tableName="ACCOUNT">
+            <column name="ID" valueNumeric="2"/>
+            <column name="USER_ID" valueNumeric="2"/>
+            <column name="BALANCE" valueNumeric="200.00"/>
+        </insert>
+        <insert tableName="ACCOUNT">
+            <column name="ID" valueNumeric="3"/>
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="BALANCE" valueNumeric="300.00"/>
+        </insert>
+
+        <!-- Insert Emails -->
+        <insert tableName="EMAIL_DATA">
+            <column name="ID" valueNumeric="1"/>
+            <column name="USER_ID" valueNumeric="1"/>
+            <column name="EMAIL" value="john.doe@example.com"/>
+        </insert>
+        <insert tableName="EMAIL_DATA">
+            <column name="ID" valueNumeric="2"/>
+            <column name="USER_ID" valueNumeric="2"/>
+            <column name="EMAIL" value="jane.smith@example.com"/>
+        </insert>
+        <insert tableName="EMAIL_DATA">
+            <column name="ID" valueNumeric="3"/>
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="EMAIL" value="alice.johnson@example.com"/>
+        </insert>
+        <insert tableName="EMAIL_DATA">
+            <column name="ID" valueNumeric="4"/>
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="EMAIL" value="alice.johnson.second.email@example.com"/>
+        </insert>
+
+        <!-- Insert Phones -->
+        <insert tableName="PHONE_DATA">
+            <column name="ID" valueNumeric="1"/>
+            <column name="USER_ID" valueNumeric="1"/>
+            <column name="PHONE" value="79207865431"/>
+        </insert>
+        <insert tableName="PHONE_DATA">
+            <column name="ID" valueNumeric="2"/>
+            <column name="USER_ID" valueNumeric="2"/>
+            <column name="PHONE" value="79207865432"/>
+        </insert>
+        <insert tableName="PHONE_DATA">
+            <column name="ID" valueNumeric="3"/>
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="PHONE" value="79207865433"/>
+        </insert>
+        <insert tableName="PHONE_DATA">
+            <column name="ID" valueNumeric="4"/>
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="PHONE" value="79207865499"/>
+        </insert>
+
+        <alterSequence sequenceName="user_id_seq" incrementBy="1" startValue="4" />
+        <alterSequence sequenceName="account_id_seq" incrementBy="1" startValue="4" />
+        <alterSequence sequenceName="email_data_id_seq" incrementBy="1" startValue="5" />
+        <alterSequence sequenceName="phone_data_id_seq" incrementBy="1" startValue="5" />
+
+        <rollback>
+            <!-- Delete Phones -->
+            <delete tableName="PHONE_DATA">
+                <where>USER_ID = 3</where>
+            </delete>
+            <delete tableName="PHONE_DATA">
+                <where>USER_ID = 2</where>
+            </delete>
+            <delete tableName="PHONE_DATA">
+                <where>USER_ID = 1</where>
+            </delete>
+
+            <!-- Delete Emails -->
+            <delete tableName="EMAIL_DATA">
+                <where>USER_ID = 3</where>
+            </delete>
+            <delete tableName="EMAIL_DATA">
+                <where>USER_ID = 2</where>
+            </delete>
+            <delete tableName="EMAIL_DATA">
+                <where>USER_ID = 1</where>
+            </delete>
+
+            <!-- Delete Accounts -->
+            <delete tableName="ACCOUNT">
+                <where>USER_ID = 3</where>
+            </delete>
+            <delete tableName="ACCOUNT">
+                <where>USER_ID = 2</where>
+            </delete>
+            <delete tableName="ACCOUNT">
+                <where>USER_ID = 1</where>
+            </delete>
+
+            <!-- Delete Users -->
+            <delete tableName="user">
+                <where>ID = 3</where>
+            </delete>
+            <delete tableName="user">
+                <where>ID = 2</where>
+            </delete>
+            <delete tableName="user">
+                <where>ID = 1</where>
+            </delete>
+
+            <!-- Update Sequences -->
+            <sql>
+                select setval('account_id_seq', (select max(id) from account));
+                select setval('email_data_id_seq', (select max(id) from email_data));
+                select setval('phone_data_id_seq', (select max(id) from phone_data));
+                select setval('user_id_seq', (select max(id) from "user"));
+            </sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="01-create-table-email_data.xml" author="areztsov">
+        <createTable tableName="EMAIL_DATA">
+            <column name="ID" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGINT"/>
+            <column name="EMAIL" type="VARCHAR(200)">
+                <constraints unique="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="EMAIL_DATA"
+                baseColumnNames="USER_ID"
+                constraintName="FK_EMAIL_DATA_USER"
+                referencedTableName="user"
+                referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>

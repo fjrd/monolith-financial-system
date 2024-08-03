@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="01-create-table-account.xml" author="areztsov">
+        <createTable tableName="ACCOUNT">
+            <column name="ID" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="BALANCE" type="NUMERIC"/>
+        </createTable>
+        <addForeignKeyConstraint
+                baseTableName="ACCOUNT"
+                baseColumnNames="USER_ID"
+                constraintName="FK_ACCOUNT_USER"
+                referencedTableName="user"
+                referencedColumnNames="ID"/>
+    </changeSet>
+</databaseChangeLog>
