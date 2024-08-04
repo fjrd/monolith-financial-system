@@ -7,6 +7,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: postgres
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
   liquibase:
     enabled: true
     drop-first: true
@@ -15,3 +19,6 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+jwt:
+  secret: ${JWT_SECRET:hpIglfkEjzeOEz9muPG2JyjZHqt5rCJ7}
+  expiration: 3600000

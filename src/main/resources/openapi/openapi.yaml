@@ -26,56 +26,36 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  token:
-                    type: string
+                $ref: '#/components/schemas/LoginResponse'
 
   /users:
     get:
-      summary: Search users
-      operationId: getUsers
+      summary: Search users by params
+      operationId: findUsersBy
       tags:
         - User api
       parameters:
-        - name: dateOfBirth
-          in: query
-          schema:
-            type: string
-            format: date
-        - name: phone
-          in: query
-          schema:
-            type: string
-        - name: name
-          in: query
-          schema:
-            type: string
-        - name: email
-          in: query
-          schema:
-            type: string
-        - name: page
-          in: query
-          schema:
-            type: integer
-            format: int64
-            default: 1
-        - name: size
-          in: query
-          schema:
-            type: integer
-            format: int64
-            default: 10
+        - in: query
+          name: pageable
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pageable'
+        - in: query
+          name: userSearchParams
+          required: false
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserSearchParams'
       responses:
         200:
           description: List of users
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/UserSearchResponse'
 
   /users/{id}:
     get:
@@ -96,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
+                $ref: '#/components/schemas/UserByIdResponse'
   
   /users/{userId}/emails:
     put:
@@ -170,6 +150,18 @@ paths:
 
 components:
   schemas:
+    Pageable:
+      type: object
+      properties:
+        page:
+          description: The page number (0-based)
+          type: integer
+          default: 0
+        size:
+          description: The number of items per page
+          type: integer
+          default: 10
+
     LoginRequest:
       type: object
       required:
@@ -190,7 +182,42 @@ components:
         - required:
             - email
 
-    UserResponse:
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+
+    UserSearchParams:
+      type: object
+      properties:
+        dateOfBirth:
+          type: string
+          format: date
+        phone:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+
+    UserSearchResponse:
+      type: object
+      properties:
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        content:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserDto'
+
+    UserByIdResponse:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/UserDto'
+
+    UserDto:
       type: object
       properties:
         id:

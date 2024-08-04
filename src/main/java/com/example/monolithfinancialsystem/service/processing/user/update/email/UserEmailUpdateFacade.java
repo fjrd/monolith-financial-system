@@ -4,6 +4,6 @@ import com.example.model.UserEmailsDto;
 
 public interface UserEmailUpdateFacade {
 
-    UserEmailsDto updateUserEmails(Long userId, UserEmailsDto userEmailsDto);
+    UserEmailsDto update(Long userId, UserEmailsDto userEmailsDto);
 
 }

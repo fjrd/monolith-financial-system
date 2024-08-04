@@ -38,8 +38,9 @@ public class User {
     @Column(name = "password", nullable = false, length = 500)
     private String password;
 
-    @OneToMany(mappedBy = "user")
-    private List<Account> account;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Account account;
 
     @OneToMany(mappedBy = "user")
     private List<PhoneData> phoneData;

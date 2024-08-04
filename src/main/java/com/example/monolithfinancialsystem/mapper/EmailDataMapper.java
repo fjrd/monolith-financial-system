@@ -5,6 +5,7 @@ import com.example.monolithfinancialsystem.persistence.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EmailDataMapper {
@@ -13,4 +14,8 @@ public interface EmailDataMapper {
     @Mapping(source = "email", target = "email")
     EmailData mapToEntity(User user, String email);
 
+    @Named("mapEmailToString")
+    default String mapEmailToString(EmailData emailData) {
+        return emailData.getEmail();
+    }
 }
