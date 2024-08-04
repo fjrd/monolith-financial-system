@@ -31,16 +31,19 @@
             <column name="ID" valueNumeric="1"/>
             <column name="USER_ID" valueNumeric="1"/>
             <column name="BALANCE" valueNumeric="100.00"/>
+            <column name="INITIAL_DEPOSIT" valueNumeric="100.00"/>
         </insert>
         <insert tableName="ACCOUNT">
             <column name="ID" valueNumeric="2"/>
             <column name="USER_ID" valueNumeric="2"/>
             <column name="BALANCE" valueNumeric="200.00"/>
+            <column name="INITIAL_DEPOSIT" valueNumeric="200.00"/>
         </insert>
         <insert tableName="ACCOUNT">
             <column name="ID" valueNumeric="3"/>
             <column name="USER_ID" valueNumeric="3"/>
             <column name="BALANCE" valueNumeric="300.00"/>
+            <column name="INITIAL_DEPOSIT" valueNumeric="300.00"/>
         </insert>
 
         <!-- Insert Emails -->

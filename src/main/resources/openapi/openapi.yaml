@@ -147,6 +147,10 @@ paths:
       responses:
         200:
           description: Transfer completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferResponse'
 
 components:
   schemas:
@@ -204,8 +208,6 @@ components:
     UserSearchResponse:
       type: object
       properties:
-        pageable:
-          $ref: '#/components/schemas/Pageable'
         content:
           type: array
           items:
@@ -214,7 +216,7 @@ components:
     UserByIdResponse:
       type: object
       properties:
-        data:
+        content:
           $ref: '#/components/schemas/UserDto'
 
     UserDto:
@@ -227,7 +229,7 @@ components:
           type: string
         dateOfBirth:
           type: string
-          format: date
+          pattern: '^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.\d{4}$'
         emails:
           type: array
           items:
@@ -260,6 +262,7 @@ components:
           minItems: 1
           items:
             type: string
+            pattern: '^\d{11}$'
 
     TransferRequest:
       type: object
@@ -282,6 +285,12 @@ components:
           format: number
 
     ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string
+
+    TransferResponse:
       type: object
       properties:
         message:

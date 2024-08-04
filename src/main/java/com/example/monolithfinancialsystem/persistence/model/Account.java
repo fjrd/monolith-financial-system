@@ -29,7 +29,12 @@ public class Account {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "balance")
+    @NotNull
+    @Column(name = "balance", nullable = false)
     private BigDecimal balance;
+
+    @NotNull
+    @Column(name = "initial_deposit", nullable = false)
+    private BigDecimal initialDeposit;
 
 }

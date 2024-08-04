@@ -1,6 +1,7 @@
 package com.example.monolithfinancialsystem.service.processing.user.search;
 
 import com.example.model.Pageable;
+import com.example.model.UserByIdResponse;
 import com.example.model.UserSearchParams;
 import com.example.model.UserSearchResponse;
 import com.example.monolithfinancialsystem.mapper.UserMapper;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -34,4 +37,12 @@ public class UserSearchFacadeImpl implements UserSearchFacade {
         return response;
     }
 
+    @Override
+    public UserByIdResponse getUserById(Long id) {
+        return Optional.ofNullable(id)
+                .map(userCrudService::getByIdOrThrow)
+                .map(userMapper::mapToUserDto)
+                .map(dto -> UserByIdResponse.builder().content(dto).build())
+                .orElseThrow();
+    }
 }

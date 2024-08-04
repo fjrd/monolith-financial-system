@@ -30,7 +30,8 @@ public class UserController implements UsersApi {
 
     @Override
     public ResponseEntity<UserByIdResponse> getUserById(Long id) {
-        return UsersApi.super.getUserById(id);
+        UserByIdResponse response = userSearchFacade.getUserById(id);
+        return ResponseEntity.ok(response);
     }
 
     @Override

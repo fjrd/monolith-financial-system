@@ -12,7 +12,12 @@
             <column name="USER_ID" type="BIGINT">
                 <constraints nullable="false" unique="true"/>
             </column>
-            <column name="BALANCE" type="NUMERIC"/>
+            <column name="BALANCE" type="NUMERIC">
+                <constraints nullable="false"/>
+            </column>
+            <column name="INITIAL_DEPOSIT" type="NUMERIC">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addForeignKeyConstraint
                 baseTableName="ACCOUNT"

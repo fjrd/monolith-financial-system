@@ -8,7 +8,7 @@ spring:
     username: postgres
     password: postgres
   jpa:
-    show-sql: true
+    show-sql: false
     hibernate:
       ddl-auto: none
   liquibase:
@@ -22,3 +22,9 @@ spring:
 jwt:
   secret: ${JWT_SECRET:hpIglfkEjzeOEz9muPG2JyjZHqt5rCJ7}
   expiration: 3600000
+
+scheduling:
+  account-interest:
+    fixed-delay-ms: 30000
+    rate: 1.10
+    max-multiplier: 2.07
