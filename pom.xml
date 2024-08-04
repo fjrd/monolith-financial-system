@@ -15,7 +15,7 @@
 	<description>monolith-financial-system</description>
 	<properties>
 		<java.version>11</java.version>
-		<openapi-generator-maven-plugin.version>7.6.0</openapi-generator-maven-plugin.version>
+		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -44,6 +44,16 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>${org.mapstruct.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>${org.mapstruct.version}</version>
 		</dependency>
 
 		<dependency>
@@ -103,6 +113,14 @@
 								<useSpringBoot3>false</useSpringBoot3>
 								<useSpringfox>true</useSpringfox>
 								<openApiNullable>false</openApiNullable>
+								<additionalModelTypeAnnotations>
+									@lombok.AllArgsConstructor
+									@lombok.NoArgsConstructor
+									@lombok.experimental.Accessors(chain = true)
+									@lombok.Data
+									@lombok.Builder
+									@com.fasterxml.jackson.annotation.JsonIgnoreProperties(ignoreUnknown = true);
+								</additionalModelTypeAnnotations>
 							</configOptions>
 						</configuration>
 					</execution>

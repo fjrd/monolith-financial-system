@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,9 +33,18 @@ public class User {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
-    @Size(min = 8, max = 500)
     @NotNull
+    @Size(min = 8, max = 500)
     @Column(name = "password", nullable = false, length = 500)
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<Account> account;
+
+    @OneToMany(mappedBy = "user")
+    private List<PhoneData> phoneData;
+
+    @OneToMany(mappedBy = "user")
+    private List<EmailData> emailData;
 
 }

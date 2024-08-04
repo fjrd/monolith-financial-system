@@ -98,14 +98,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserResponse'
   
-  /users/{id}/emails:
+  /users/{userId}/emails:
     put:
       summary: Create or update user emails
       operationId: createOrUpdateUserEmails
       tags:
         - User api
       parameters:
-        - name: id
+        - name: userId
           in: path
           required: true
           schema:
@@ -125,14 +125,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/UserEmailsDto'
 
-  /users/{id}/phones:
+  /users/{userId}/phones:
     put:
       summary: Create or update user phones
       operationId: createOrUpdateUserPhones
       tags:
         - User api
       parameters:
-        - name: id
+        - name: userId
           in: path
           required: true
           schema:
@@ -214,17 +214,23 @@ components:
 
     UserEmailsDto:
       type: object
+      required:
+        - emails
       properties:
         emails:
           type: array
+          minItems: 1
           items:
             type: string
 
     UserPhonesDto:
       type: object
+      required:
+        - phones
       properties:
         phones:
           type: array
+          minItems: 1
           items:
             type: string
 
@@ -247,3 +253,9 @@ components:
         balance:
           type: number
           format: number
+
+    ErrorResponse:
+      type: object
+      properties:
+        message:
+          type: string

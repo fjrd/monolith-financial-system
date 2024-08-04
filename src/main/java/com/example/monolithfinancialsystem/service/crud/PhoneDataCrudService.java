@@ -1,11 +1,10 @@
-package com.example.monolithfinancialsystem.persistence.repository;
+package com.example.monolithfinancialsystem.service.crud;
 
 import com.example.monolithfinancialsystem.persistence.model.PhoneData;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PhoneDataRepository extends JpaRepository<PhoneData, Long> {
+public interface PhoneDataCrudService extends AbstractCrudServiceInterface<PhoneData, Long> {
 
     List<PhoneData> findAllByPhoneInAndUserIdIsNot(List<String> phones, Long userId);
 
