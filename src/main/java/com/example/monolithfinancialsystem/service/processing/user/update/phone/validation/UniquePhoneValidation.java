@@ -23,7 +23,7 @@ public class UniquePhoneValidation implements UserPhoneUpdateValidation {
     private final PhoneDataCrudService phoneDataCrudService;
 
     @Override
-    public void validate(Long userId, UserPhonesDto request) {
+    public void validate(Long userId, String authorization, UserPhonesDto request) {
         Optional.ofNullable(request)
                 .map(r -> phoneDataCrudService.findAllByPhoneInAndUserIdIsNot(r.getPhones(), userId))
                 .filter(Predicate.not(List::isEmpty))

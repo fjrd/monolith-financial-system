@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface EmailDataMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "user", target = "user")
     @Mapping(source = "email", target = "email")
     EmailData mapToEntity(User user, String email);

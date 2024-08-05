@@ -4,6 +4,6 @@ import com.example.model.UserPhonesDto;
 
 public interface UserPhoneUpdateFacade {
 
-    UserPhonesDto update(Long userId, UserPhonesDto request);
+    UserPhonesDto update(Long userId, String authorization, UserPhonesDto request);
 
 }

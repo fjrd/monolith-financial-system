@@ -5,6 +5,7 @@ import com.example.model.TransferResponse;
 import com.example.monolithfinancialsystem.persistence.model.Account;
 import com.example.monolithfinancialsystem.service.crud.AccountCrudService;
 import com.example.monolithfinancialsystem.service.processing.account.transfer.validation.AccountTransferValidation;
+import com.example.monolithfinancialsystem.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,10 +28,11 @@ public class AccountTransferFacadeImpl implements AccountTransferFacade {
 
     private final List<AccountTransferValidation> validations;
     private final AccountCrudService accountCrudService;
+    private final JwtUtil jwtUtil;
 
     @Override
-    public TransferResponse transfer(TransferRequest request) {
-        Long fromUserId = 1L; //TODO get id from token
+    public TransferResponse transfer(String authorization, TransferRequest request) {
+        Long fromUserId = jwtUtil.getUserId(authorization);
         Long toUserId = request.getToUserId();
 
         Lock lock1 = lockMap.computeIfAbsent(Math.min(fromUserId, toUserId), k -> new ReentrantLock());

@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface PhoneDataMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "user", target = "user")
     @Mapping(source = "phone", target = "phone")
     PhoneData mapToEntity(User user, String phone);

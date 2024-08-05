@@ -4,9 +4,9 @@ spring:
   application:
     name: monolith-financial-system
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/postgres}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
   jpa:
     show-sql: false
     hibernate:
@@ -19,6 +19,11 @@ spring:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
+
+logging:
+  level:
+    root: INFO
+
 jwt:
   secret: ${JWT_SECRET:hpIglfkEjzeOEz9muPG2JyjZHqt5rCJ7}
   expiration: 3600000

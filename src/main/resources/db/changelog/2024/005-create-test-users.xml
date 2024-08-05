@@ -90,10 +90,13 @@
             <column name="PHONE" value="79207865499"/>
         </insert>
 
-        <alterSequence sequenceName="user_id_seq" incrementBy="1" startValue="4" />
-        <alterSequence sequenceName="account_id_seq" incrementBy="1" startValue="4" />
-        <alterSequence sequenceName="email_data_id_seq" incrementBy="1" startValue="5" />
-        <alterSequence sequenceName="phone_data_id_seq" incrementBy="1" startValue="5" />
+        <!-- Update Sequences -->
+        <sql>
+            select setval('account_id_seq', (select max(id) from account));
+            select setval('email_data_id_seq', (select max(id) from email_data));
+            select setval('phone_data_id_seq', (select max(id) from phone_data));
+            select setval('user_id_seq', (select max(id) from "user"));
+        </sql>
 
         <rollback>
             <!-- Delete Phones -->

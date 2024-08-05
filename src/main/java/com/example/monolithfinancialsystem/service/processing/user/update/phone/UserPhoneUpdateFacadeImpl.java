@@ -30,8 +30,8 @@ public class UserPhoneUpdateFacadeImpl implements UserPhoneUpdateFacade {
     private final PhoneDataMapper phoneDataMapper;
 
     @Override
-    public UserPhonesDto update(Long userId, UserPhonesDto request) {
-        validations.forEach(v -> v.validate(userId, request));
+    public UserPhonesDto update(Long userId, String authorization, UserPhonesDto request) {
+        validations.forEach(v -> v.validate(userId, authorization, request));
         User user = userCrudService.getByIdOrThrow(userId);
 
         Map<String, PhoneData> existingUserPhones = user.getPhoneData().stream()

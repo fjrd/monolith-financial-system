@@ -5,6 +5,6 @@ import com.example.model.UserPhonesDto;
 @FunctionalInterface
 public interface UserPhoneUpdateValidation {
 
-    void validate(Long userId, UserPhonesDto request);
+    void validate(Long userId, String authorization, UserPhonesDto request);
 
 }

@@ -2,6 +2,7 @@ package com.example.monolithfinancialsystem.api.exception.handler;
 
 import com.example.model.ErrorResponse;
 import com.example.monolithfinancialsystem.exception.BusinessValidationException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +33,14 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ErrorResponse handle(MethodArgumentNotValidException e) {
+        return ErrorResponse.builder()
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(JwtException.class)
+    public ErrorResponse handle(JwtException e) {
         return ErrorResponse.builder()
                 .message(e.getMessage())
                 .build();

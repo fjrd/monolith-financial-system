@@ -5,6 +5,6 @@ import com.example.model.TransferResponse;
 
 public interface AccountTransferFacade {
 
-    TransferResponse transfer(TransferRequest transferRequest);
+    TransferResponse transfer(String authorization, TransferRequest transferRequest);
 
 }

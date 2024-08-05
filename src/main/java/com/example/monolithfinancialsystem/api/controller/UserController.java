@@ -18,15 +18,16 @@ public class UserController implements UsersApi {
     private final UserSearchFacade userSearchFacade;
 
     @Override
-    public ResponseEntity<UserEmailsDto> createOrUpdateUserEmails(Long userId, UserEmailsDto userEmailsDto) {
-        UserEmailsDto response = userEmailUpdateFacade.update(userId, userEmailsDto);
+    public ResponseEntity<UserEmailsDto> createOrUpdateUserEmails(Long userId, String authorization, UserEmailsDto userEmailsDto) {
+        UserEmailsDto response = userEmailUpdateFacade.update(userId, authorization, userEmailsDto);
         return ResponseEntity.ok(response);
     }
 
     @Override
-    public ResponseEntity<UserPhonesDto> createOrUpdateUserPhones(Long userId, UserPhonesDto userPhonesDto) {
-        UserPhonesDto response = userPhoneUpdateFacade.update(userId, userPhonesDto);
-        return ResponseEntity.ok(response);    }
+    public ResponseEntity<UserPhonesDto> createOrUpdateUserPhones(Long userId, String authorization, UserPhonesDto userPhonesDto) {
+        UserPhonesDto response = userPhoneUpdateFacade.update(userId, authorization, userPhonesDto);
+        return ResponseEntity.ok(response);
+    }
 
     @Override
     public ResponseEntity<UserByIdResponse> getUserById(Long id) {

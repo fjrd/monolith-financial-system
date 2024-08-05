@@ -6,8 +6,7 @@ import com.example.monolithfinancialsystem.persistence.model.EmailData;
 import com.example.monolithfinancialsystem.service.crud.EmailDataCrudService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,15 +14,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
-@Transactional
+@Component
 @RequiredArgsConstructor
 public class UniqueEmailValidation implements UserEmailUpdateValidation {
 
     private final EmailDataCrudService emailDataCrudService;
 
     @Override
-    public void validate(Long userId, UserEmailsDto request) {
+    public void validate(Long userId, String authorization, UserEmailsDto request) {
         Optional.ofNullable(request)
                 .map(r -> emailDataCrudService.findAllByEmailInAndUserIdIsNot(r.getEmails(), userId))
                 .filter(Predicate.not(List::isEmpty))

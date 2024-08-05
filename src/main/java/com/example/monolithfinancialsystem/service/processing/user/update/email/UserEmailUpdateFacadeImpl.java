@@ -31,8 +31,8 @@ public class UserEmailUpdateFacadeImpl implements UserEmailUpdateFacade {
     private final EmailDataMapper emailDataMapper;
 
     @Override
-    public UserEmailsDto update(Long userId, UserEmailsDto request) {
-        validations.forEach(v -> v.validate(userId, request));
+    public UserEmailsDto update(Long userId, String authorization, UserEmailsDto request) {
+        validations.forEach(v -> v.validate(userId, authorization, request));
         User user = userCrudService.getByIdOrThrow(userId);
 
         Map<String, EmailData> existingUserEmails = user.getEmailData().stream()
