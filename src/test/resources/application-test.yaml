@@ -30,7 +30,7 @@ jwt:
 
 scheduling:
   account-interest:
-    enabled: true
+    enabled: false
     fixed-delay-ms: 30000
     rate: 1.10
     max-multiplier: 2.07

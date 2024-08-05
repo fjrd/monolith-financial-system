@@ -8,8 +8,12 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
 
-
     Optional<User> getByEmailDataEmail(String email);
 
     Optional<User> getByPhoneDataPhone(String phone);
+
+    User getFirstByOrderByIdAsc();
+    
+    User getFirstByOrderByIdDesc();
+
 }

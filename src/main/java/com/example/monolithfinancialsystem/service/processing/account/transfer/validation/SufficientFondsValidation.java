@@ -13,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class SufficientFondsValidation implements AccountTransferValidation{
+public class SufficientFondsValidation implements AccountTransferValidation {
+
+    public static final String INSUFFICIENT_FUNDS_ERROR_MESSAGE = "Insufficient funds in the account";
 
     @Override
     public void validate(Account fromAccount, Account toAccount, TransferRequest request) {
         if (fromAccount.getBalance().compareTo(request.getValue()) < 0) {
-            throw new BusinessValidationException("Insufficient funds in the account");
+            throw new BusinessValidationException(INSUFFICIENT_FUNDS_ERROR_MESSAGE);
         }
     }
 }

@@ -19,6 +19,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class AuthLoginFacadeImpl implements AuthLoginFacade {
 
+    public static final String INCORRECT_CREDENTIALS_MESSAGE = "Incorrect email, phone or password";
+
     private final UserCrudService userCrudService;
     private final JwtUtil jwtUtil;
 
@@ -26,7 +28,7 @@ public class AuthLoginFacadeImpl implements AuthLoginFacade {
     public LoginResponse login(LoginRequest loginRequest) {
         User user = userCrudService.getByLoginRequestOrThrow(loginRequest);
         if (! Objects.equals(user.getPassword(), loginRequest.getPassword())) {
-            throw new BusinessValidationException("Incorrect email, phone or password");
+            throw new BusinessValidationException(INCORRECT_CREDENTIALS_MESSAGE);
         }
         String token = jwtUtil.generateToken(user.getId());
         return LoginResponse.builder().token(token).build();

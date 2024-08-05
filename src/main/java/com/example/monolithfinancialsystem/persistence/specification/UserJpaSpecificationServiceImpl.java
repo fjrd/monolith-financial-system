@@ -29,10 +29,10 @@ public class UserJpaSpecificationServiceImpl implements UserJpaSpecificationServ
             query.distinct(true);
             Map<String, Join<?, ?>> reusableJoins = new ConcurrentHashMap<>();
             Predicate[] predicates = Stream.of(
-                    Optional.ofNullable(params.getDateOfBirth()).map(date -> cb.greaterThanOrEqualTo(root.get(User.Fields.DATE_OF_BIRTH), date)),
+                    Optional.ofNullable(params.getDateOfBirth()).map(date -> cb.greaterThanOrEqualTo(root.get(User.Fields.dateOfBirth), date)),
                     Optional.ofNullable(params.getPhone()).map(phone -> buildPhonePredicate(root, cb, reusableJoins, phone)),
                     Optional.ofNullable(params.getEmail()).map(email -> buildEmailPredicate(root, cb, reusableJoins, email)),
-                    Optional.ofNullable(params.getName()).map(name -> cb.like(cb.upper(root.get(User.Fields.NAME)), "%" + name.toUpperCase() + "%"))
+                    Optional.ofNullable(params.getName()).map(name -> cb.like(cb.upper(root.get(User.Fields.name)), "%" + name.toUpperCase() + "%"))
             )
                     .filter(Optional::isPresent)
                     .map(Optional::get)
@@ -42,12 +42,12 @@ public class UserJpaSpecificationServiceImpl implements UserJpaSpecificationServ
     }
 
     private Predicate buildPhonePredicate(Root<User> root, CriteriaBuilder cb, Map<String, Join<?, ?>> joins, String phone) {
-        Join<?, ?> phoneDataJoin = joins.computeIfAbsent(User.Fields.PHONE_DATA, root::join);
-        return cb.equal(phoneDataJoin.get(PhoneData.Fields.PHONE), phone);
+        Join<?, ?> phoneDataJoin = joins.computeIfAbsent(User.Fields.phoneData, root::join);
+        return cb.equal(phoneDataJoin.get(PhoneData.Fields.phone), phone);
     }
 
     private Object buildEmailPredicate(Root<User> root, CriteriaBuilder cb, Map<String, Join<?, ?>> joins, String email) {
-        Join<?, ?> phoneDataJoin = joins.computeIfAbsent(User.Fields.EMAIL_DATA, root::join);
-        return cb.equal(phoneDataJoin.get(EmailData.Fields.EMAIL), email);
+        Join<?, ?> phoneDataJoin = joins.computeIfAbsent(User.Fields.emailData, root::join);
+        return cb.equal(phoneDataJoin.get(EmailData.Fields.email), email);
     }
 }
